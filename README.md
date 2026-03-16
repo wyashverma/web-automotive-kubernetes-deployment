@@ -73,7 +73,7 @@ Tech Stack
 **Group Members**
 1. Mohit Kumar Gupta : EN22CS301607
 2. Mohit Chauhan : EN22CS301605
-3. Mouli Sukhla : EN22CS301623
+3. Mouli Shukla : EN22CS301615
 4. Nikhil Javery : EN22CS301647
 5. Naman Pandey : EN22CS301630
 
