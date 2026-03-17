@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  automotive-ai:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app/reports:/app/reports
+      - ./app/static:/app/static
+    environment:
+      - GOOGLE_API_KEY=AIzaSyAXQD1xmjT3vy7Ek7e6BNqMWKxVwi4URts
+    restart: unless-stopped
