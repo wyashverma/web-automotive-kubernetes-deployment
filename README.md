@@ -1,4 +1,4 @@
-# laravel-automotive-kubernetes-deployment
+# automotive-kubernetes-deployment
 
 Group No: D6 - Group 05
 Project No: 	DO-16
