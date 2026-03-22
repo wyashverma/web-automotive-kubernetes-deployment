@@ -24,13 +24,24 @@ jobs:
           
           cd ~/laravel-automotive-kubernetes-deployment
           
+          # Pull latest code
           git pull origin main
           
-          docker stop $(docker ps -q) || true
-          docker rm $(docker ps -aq) || true
+          # Stop and remove only the app container
+          docker stop multiagent-app || true
+          docker rm multiagent-app || true
           
+          # Build new image
           docker build -t multiagent-ai .
           
-          docker run -d -p 8000:8000 multiagent-ai
+          # Run new container with name and auto-restart
+          docker run -d \
+            --name multiagent-app \
+            --restart unless-stopped \
+            -p 8000:8000 \
+            multiagent-ai
+          
+          # Clean up old images (optional)
+          docker image prune -f
           
           EOF
