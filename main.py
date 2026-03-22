@@ -20,9 +20,9 @@ writer = WriterAgentWrapper(shared_memory, WriterModule(output_dir="/app/reports
 supervisor = SupervisorAgent(shared_memory, researcher, writer)
 
 # Mount static files
-os.environ["GOOGLE_API_KEY"] = "AIzaSyAXQD1xmjT3vy7Ek7e6BNqMWKxVwi4URts"
-app.mount("/static", StaticFiles(directory="/app/static"), name="static")
-app.mount("/reports", StaticFiles(directory="/app/reports"), name="reports")
+#os.environ["GOOGLE_API_KEY"] = "AIzaSyAXQD1xmjT3vy7Ek7e6BNqMWKxVwi4URts"
+#app.mount("/static", StaticFiles(directory="/app/static"), name="static")
+#app.mount("/reports", StaticFiles(directory="/app/reports"), name="reports")
 
 
 class QueryRequest(BaseModel):
@@ -43,7 +43,7 @@ class QueryResponse(BaseModel):
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
     """Serve the frontend HTML"""
-    with open("/app/static/index.html", "r") as f:
+    with open("index.html", "r") as f:
         return f.read()
 
 
