@@ -1,0 +1,53 @@
+name: EC2 CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        script_stop: true
+        script: |
+          if [ ! -d "laravel-automotive-kubernetes-deployment" ]; then
+            echo " Cloning repository..."
+            git clone https://github.com/wyashverma/web-automotive-kubernetes-deployment.git
+          fi
+          
+          cd laravel-automotive-kubernetes-deployment
+          
+          echo " Pulling latest changes..."
+          git pull origin main
+          
+          echo " Stopping old container..."
+          docker stop app || true
+          docker rm app || true
+          
+          echo " Building Docker image..."
+          docker build --no-cache -t laravel-automotive-app .
+          
+          echo " Cleaning unused images..."
+          docker image prune -f
+          
+          echo " Starting new container..."
+          docker run -d \
+            --name app \
+            --restart unless-stopped \
+            -p 8000:8000 \
+            laravel-automotive-app
+          
+          echo " Container status:"
+          docker ps --filter "name=app"
+          
+          echo " Deployment completed!"
