@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multiagent-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multiagent-app
+  template:
+    metadata:
+      labels:
+        app: multiagent-app
+    spec:
+      containers:
+      - name: multiagent-app
+        image: <wyashverma>/multiagent-app:latest
+        ports:
+        - containerPort: 8000
